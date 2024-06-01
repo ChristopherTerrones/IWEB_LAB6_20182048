@@ -5,7 +5,7 @@ public class Actor {
     private String nombre;
     private String apellido;
     private int anoNacimiento;
-    private int premioOscar;
+    private boolean premioOscar;
 
     public int getIdActor() {
         return idActor;
@@ -39,11 +39,11 @@ public class Actor {
         this.anoNacimiento = anoNacimiento;
     }
 
-    public int getPremioOscar() {
+    public boolean isPremioOscar() {
         return premioOscar;
     }
 
-    public void setPremioOscar(int premioOscar) {
+    public void setPremioOscar(boolean premioOscar) {
         this.premioOscar = premioOscar;
     }
 }

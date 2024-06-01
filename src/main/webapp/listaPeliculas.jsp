@@ -1,5 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.lab6_20182048.Beans.Pelicula" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,16 +27,18 @@
       </tr>
       <%
         ArrayList<Pelicula> peliculas = (ArrayList<Pelicula>) request.getAttribute("peliculas");
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
+        currencyFormat.setMaximumFractionDigits(0);
         for (Pelicula pelicula : peliculas) {
       %>
       <tr>
-        <td><a href="<%=request.getContextPath()%>/Pelicula?a=<%= pelicula.getIdPelicula() %>"><%= pelicula.getTitulo() %></a></td>
+        <td><a href="<%=request.getContextPath()%>/Pelicula?a=view&id=<%= pelicula.getIdPelicula() %>"><%= pelicula.getTitulo() %></a></td>
         <td><%= pelicula.getDirector() %></td>
         <td><%= pelicula.getAnoPublicacion() %></td>
         <td><%= pelicula.getRating() %></td>
-        <td><%= pelicula.getBoxOffice() %></td>
+        <td><%= currencyFormat.format(pelicula.getBoxOffice()) %></td>
         <td><%= pelicula.getGenero().getNombre() %></td>
-        <td><a href="<%=request.getContextPath()%>/Actor?a=lista&id=<%= pelicula.getIdPelicula() %>">Actores</a></td>
+        <td><a href="<%=request.getContextPath()%>/Actor?a=ver&id=<%= pelicula.getIdPelicula() %>"> Ver Actores</a></td>
       </tr>
       <%
         }

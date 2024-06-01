@@ -5,6 +5,7 @@ import com.example.lab6_20182048.Beans.Pelicula;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PeliculaDao {
     private static String user = "root";
@@ -41,6 +42,17 @@ public class PeliculaDao {
         }catch (SQLException e) {
             System.out.println("No se pudo realizar la busqueda");
         }
+        listapeliculas.sort(new Comparator<Pelicula>() {
+            @Override
+            public int compare(Pelicula p1, Pelicula p2) {
+                int ratingComparison = Double.compare(p2.getRating(), p1.getRating());
+                if (ratingComparison == 0) {
+                    return Double.compare(p2.getBoxOffice(), p1.getBoxOffice());
+                }
+                return ratingComparison;
+            }
+        });
+
         return listapeliculas;
 
     }

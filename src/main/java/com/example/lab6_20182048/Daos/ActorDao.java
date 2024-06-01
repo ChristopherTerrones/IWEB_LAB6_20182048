@@ -1,6 +1,8 @@
 package com.example.lab6_20182048.Daos;
 
 import com.example.lab6_20182048.Beans.Actor;
+import com.example.lab6_20182048.Beans.Pelicula;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -28,7 +30,7 @@ public class ActorDao {
                     actor.setNombre(rs.getString("nombre"));
                     actor.setApellido(rs.getString("apellido"));
                     actor.setAnoNacimiento(rs.getInt("anoNacimiento"));
-                    actor.setPremioOscar(rs.getInt("premioOscar"));
+                    actor.setPremioOscar(rs.getBoolean("premioOscar"));
                     actores.add(actor);
                 }
             }
@@ -37,5 +39,23 @@ public class ActorDao {
         }
 
         return actores;
+    }
+    public Pelicula obtenerPeliculaPorId(int idPelicula) {
+        Pelicula pelicula = null;
+        String sql = "SELECT p.idPelicula, p.titulo FROM Pelicula p WHERE p.idPelicula = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idPelicula);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                pelicula = new Pelicula();
+                pelicula.setIdPelicula(rs.getInt("idPelicula"));
+                pelicula.setTitulo(rs.getString("titulo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return pelicula;
     }
 }

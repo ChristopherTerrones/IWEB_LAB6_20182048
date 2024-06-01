@@ -24,13 +24,12 @@ public class PeliculaServlet extends HttpServlet {
         switch (action) {
             case "listar" -> {
                 ArrayList<Pelicula> listapeliculas = peliculaDao.obtenerPeliculas();
-                listapeliculas.sort(Comparator.comparingDouble(Pelicula::getRating).reversed().thenComparingDouble(Pelicula::getBoxOffice).reversed());
 
                 request.setAttribute("peliculas", listapeliculas);
                 request.getRequestDispatcher("listaPeliculas.jsp").forward(request, response);
             }
             case "view" -> {
-                int idPelicula = Integer.parseInt(request.getParameter("idPelicula"));
+                int idPelicula = Integer.parseInt(request.getParameter("id"));
                 Pelicula pelicula = peliculaDao.buscarPorID(idPelicula);
                 request.setAttribute("pelicula", pelicula);
                 request.getRequestDispatcher("viewPelicula.jsp").forward(request, response);

@@ -3,7 +3,6 @@ package com.example.lab6_20182048.Servlet;
 import com.example.lab6_20182048.Beans.Actor;
 import com.example.lab6_20182048.Beans.Pelicula;
 import com.example.lab6_20182048.Daos.ActorDao;
-import com.example.lab6_20182048.Daos.PeliculaDao;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,11 +21,13 @@ public class ActorServlet extends HttpServlet {
         String action = request.getParameter("a") == null ? "listar" : request.getParameter("a");
         ActorDao actorDao = new ActorDao();
         switch (action) {
-            case "listar" -> {
-                int idPelicula = Integer.parseInt(request.getParameter("idPelicula"));
+            case "ver" -> {
+                int idPelicula = Integer.parseInt(request.getParameter("id"));
                 ArrayList<Actor> actores = actorDao.obtenerActoresPorPelicula(idPelicula);
+                Pelicula pelicula = actorDao.obtenerPeliculaPorId(idPelicula);
 
                 request.setAttribute("actores", actores);
+                request.setAttribute("tituloPelicula", pelicula.getTitulo());
                 request.getRequestDispatcher("listaActores.jsp").forward(request, response);
             }
         }
